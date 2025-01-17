@@ -1,18 +1,42 @@
 import { Image, Text, StyleSheet, View, FlatList, Button, Alert, TouchableOpacity } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
+const knots_group = {
+  1: 'Узлы для привязывания крючков',
+  2: 'Узлы для соединения лесок',
+  3: 'Узлы для создания петель',
+  4: 'Узлы для специальных задач',
+  5: 'Универсальные и декоративные узлы'
+}
 
 const list_knots = [
-  { id: '1', name: 'knot-1', image: 'image_knot', description: 'description of knot 1' },
-  { id: '2', name: 'knot-2', image: 'image_knot', description: 'description of knot 2' },
-  { id: '3', name: 'knot-3', image: 'image_knot', description: 'description of knot 3' },
-  { id: '4', name: 'knot-4', image: 'image_knot', description: 'description of knot 4' },
-  { id: '5', name: 'knot-5', image: 'image_knot', description: 'description of knot 5' },
-  { id: '6', name: 'knot-6', image: 'image_knot', description: 'description of knot 6' },
-  { id: '7', name: 'knot-7', image: 'image_knot', description: 'description of knot 7' },
-  { id: '8', name: 'knot-8', image: 'image_knot', description: 'description of knot 8' },
-  { id: '9', name: 'knot-9', image: 'image_knot', description: 'description of knot 9' }
+  { id: '1', group: 1, name: 'Паломар (Palomar Knot)', image: 'image_knot', description: 'Узел известен своей прочностью и простотой. Возник в США и стал популярен среди рыбаков благодаря универсальности. Отлично подходит для плетеных лесок.' },
+  { id: '2', group: '1', name: 'Клинч (Clinch Knot)', image: 'image_knot', description: 'Классический узел, часто используемый для монолески. Придуман рыбаками для быстрого и надежного крепления крючков и приманок.' },
+  { id: '3', group: '1', name: 'Усиленный клинч (Improved Clinch Knot)', image: 'image_knot', description: 'Современная версия клинча, более прочная благодаря дополнительному этапу фиксации. Появился в середине 20 века.' },
+  { id: '4', group: '1', name: 'Универсальный узел (Uni Knot)', image: 'image_knot', description: 'Прост в освоении и чрезвычайно надежен. Создан как замена многим узлам, чтобы уменьшить путаницу среди новичков.' },
+  { id: '5', group: '1', name: 'Снейл (Snell Knot)', image: 'image_knot', description: 'Известен со времен раннего рыболовства, когда крючки изготавливались из костей и дерева. Используется для обеспечения правильного угла крючка.' },
+  { id: '6', group: '2', name: 'Плоский узел (Square Knot)', image: 'image_knot', description: 'Один из древнейших узлов, использовался в парусном деле и рыболовстве. Удобен для временного соединения лесок.' },
+  { id: '7', group: '2', name: 'Грейпвайн (Grapevine Knot, Double Fisherman’s Knot)', image: 'image_knot', description: 'Придуман альпинистами, но стал популярным у рыбаков благодаря своей прочности.' },
+  { id: '8', group: '2', name: 'Узел «Кровавый» (Blood Knot)', image: 'image_knot', description: 'Исторически использовался рыбаками в Европе для соединения тонких лесок. Его название связано с прочностью фиксации.' },
+  { id: '9', group: '2', name: 'Парусный узел (Surgeon’s Knot)', image: 'image_knot', description: 'Произошел из хирургической практики, но оказался удобным для рыбаков благодаря надежности.' },
+  { id: '10', group: '2', name: 'Альбрайт (Albright Knot)', image: 'image_knot', description: 'Изобретен в 1950-х годах известным рыболовом Джимом Альбрайтом. Используется для соединения лесок разного диаметра.' },
+  { id: '11', group: '3', name: 'Узел «Овёс» (Bimini Twist)', image: 'image_knot', description: 'Универсальный узел для привязки поводков. Предположительно, возник в 20 веке.' },
+  { id: '12', group: '3', name: 'Лидер-луп (Leader Loop)', image: 'image_knot', description: 'Произошел из хирургической практики, но оказался удобным для рыбаков благодаря надежности.' },
+  { id: '13', group: '3', name: 'Перфекшн-луп (Perfection Loop)', image: 'image_knot', description: 'Прост в использовании. История уходит корнями к морским узлам, адаптированным для рыболовства.' },
+  { id: '14', group: '3', name: 'Узел капучино (Dropper Loop)', image: 'image_knot', description: 'Создан для ловли на несколько приманок одновременно. Появился с развитием спортивного рыболовства.' },
+  { id: '15', group: '3', name: 'Узел восьмерка (Figure Eight Loop)', image: 'image_knot', description: 'Один из древнейших узлов, использовался моряками и рыбаками для создания петель.' },
+  { id: '16', group: '4', name: 'Узел Арбор (Arbor Knot)', image: 'image_knot', description: 'Специализирован для крепления лески к катушке. Используется со времен появления первых рыболовных катушек.' },
+  { id: '17', group: '4', name: 'Узел трилене (Trilene Knot)', image: 'image_knot', description: 'Разработан компанией Berkley для использования с их лесками. Надежен для ловли на тяжелые приманки.' },
+  { id: '18', group: '4', name: 'Узел FG (FG Knot)', image: 'image_knot', description: 'Современный узел, особенно популярный среди любителей плетеных лесок.' },
+  { id: '19', group: '4', name: 'Узел Шепард (Shepherd’s Knot)', image: 'image_knot', description: 'Использовался пастухами и рыбаками, хорошо подходит для временных соединений.' },
+  { id: '20', group: '4', name: 'Узел бабочка (Butterfly Knot)', image: 'image_knot', description: 'Из альпинизма перекочевал в рыболовство благодаря своей универсальности.' },
+  { id: '21', group: '5', name: 'Узел констриктор (Constrictor Knot)', image: 'image_knot', description: 'Его часто называют «зажимным», использовался для временной фиксации сетей и снастей.' },
+  { id: '22', group: '5', name: 'Узел строительный (Builder’s Knot)', image: 'image_knot', description: 'Возник как вспомогательный узел в строительстве, стал применяться в рыбалке для крепления сетей.' },
+  { id: '23', group: '5', name: 'Узел брюшной (Belly Knot)', image: 'image_knot', description: 'Удобен для закрепления снастей на лодке или снаряжении.' },
+  { id: '24', group: '5', name: 'Узел прусик (Prusik Knot)', image: 'image_knot', description: 'Сначала применялся альпинистами, но стал полезен для рыбаков, особенно при ловле на скользящей оснастке.' },
+  { id: '25', group: '5', name: 'Узел ласточка (Swallow Knot)', image: 'image_knot', description: 'Декоративный узел, иногда используется для крепления снастей или грузил.' },
 ]
+
 
 
 export default function App() {
