@@ -1,4 +1,4 @@
-import { Image, Text, StyleSheet, View } from 'react-native';
+import { Image, Text, StyleSheet, View, FlatList, Button, Alert, TouchableOpacity } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 
@@ -21,15 +21,23 @@ export default function App() {
       <SafeAreaView style={styles.container}>
         <View style={styles.testSquade}>
           <Text style={styles.mainTitle}>Fishing Knots</Text>
-          <View>
-            {list_knots.map((item) => (
-              <View key={item.id} style={styles.contextContainer}>
-                <Text>{item.name}</Text>
-                <Text>{item.description}</Text>
+          <FlatList
+            data={list_knots}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <View key={item.id} style={styles.contentContainer}>
+                <Text style={styles.titleCard}>{item.name}</Text>
+                <TouchableOpacity
+                  onPress={() => Alert.alert(item.name)}
+                  style={styles.buttonBase}
+                >
+                  <Text
+                    style={styles.buttonText}
+                  >{'Continue'}</Text>
+                </TouchableOpacity>
               </View>
-
-            ))}
-          </View>
+            )}
+          />
         </View>
 
       </SafeAreaView>
@@ -39,19 +47,40 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    marginBottom: 40,
   },
-  contextContainer: {
+  contentContainer: {
     backgroundColor: 'yellow',
-    textAlign: 'center',
-    justifyContent: 'center'
+    margin: 10,
+    paddingBottom: 60
   },
   testSquade: {
-    backgroundColor: 'green'
+
   },
   mainTitle: {
     padding: 10,
     textAlign: 'center',
 
-  }
+  },
+  titleCard: {
+    textAlign: 'center'
+  },
+  buttonBase: {
+    backgroundColor: '#4CAF50', // Зеленый фон
+    paddingVertical: 10, // Вертикальный отступ
+    borderRadius: 8, // Закругленные углы
+    alignItems: 'center', // Выравнивание текста по горизонтали
+    justifyContent: 'center', // Выравнивание текста по вертикали
+    marginTop: 10, // Отступ сверху для кнопки
+    width: 200,
+    top: 40,
+    left: 100
+  },
+  buttonText: {
+    color: '#FFFFFF', // Белый текст
+    fontSize: 16, // Размер текста
+    fontWeight: 'bold', // Жирный шрифт
+    textAlign: 'center', // Центрирование текста
+  },
 });
