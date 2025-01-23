@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Image, Text, StyleSheet, View, FlatList, Button, Alert, TouchableOpacity, Modal } from 'react-native';
+import { Image, Text, StyleSheet, View, FlatList, Button, Alert, TouchableOpacity, Modal, TextInput } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 const knots_group = {
@@ -51,6 +51,7 @@ const DEFAULT_IMAGE_FOR_KNOTS = {
 
 export default function App() {
   const [modalVisible, setModalVisible] = useState(false)
+  const [searchText, setSearchText] = useState('')
   const showCustomAlert = () => {
     setModalVisible(true);
   };
@@ -93,6 +94,19 @@ export default function App() {
         </Modal>
         <View style={styles.testSquade}>
           <Text style={styles.mainTitle}>Fishing Knots</Text>
+          <TextInput
+            placeholder='search'
+            onChangeText={setSearchText}
+            onSubmitEditing={() => {
+              const temp = list_knots.map((item) => item.name.includes(searchText) ? item.name : null)
+              console.log(temp)
+              Alert.alert('')
+            }}
+          />
+          <Button
+            title='Search'
+            onPress={() => { Alert.alert(searchText) }}
+          />
           <FlatList
             data={list_knots}
             keyExtractor={(item) => item.id}
