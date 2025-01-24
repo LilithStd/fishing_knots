@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Image, Text, StyleSheet, View, FlatList, Button, Alert, TouchableOpacity, Modal, TextInput } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
@@ -10,8 +10,17 @@ const knots_group = {
   5: 'Универсальные и декоративные узлы'
 }
 
-const list_knots = [
-  { id: '1', group: 1, name: 'Паломар (Palomar Knot)', imagePreview: '../../assets/images/knots/palomar(preview).png', imageFull: '../../assets/images/knots/palomar.png', description: 'Узел известен своей прочностью и простотой. Возник в США и стал популярен среди рыбаков благодаря универсальности. Отлично подходит для плетеных лесок.' },
+type List_Knots_Type = {
+  id: string,
+  group: string,
+  name: string,
+  imagePreview: string,
+  imageFull: string,
+  description: string
+}
+
+const list_knots: List_Knots_Type[] = [
+  { id: '1', group: knots_group[1], name: 'Паломар (Palomar Knot)', imagePreview: '../../assets/images/knots/palomar(preview).png', imageFull: '../../assets/images/knots/palomar.png', description: 'Узел известен своей прочностью и простотой. Возник в США и стал популярен среди рыбаков благодаря универсальности. Отлично подходит для плетеных лесок.' },
   { id: '2', group: '1', name: 'Клинч (Clinch Knot)', imagePreview: '../../assets/images/knots/palomar(preview).png', imageFull: '../../assets/images/knots/palomar.png', description: 'Классический узел, часто используемый для монолески. Придуман рыбаками для быстрого и надежного крепления крючков и приманок.' },
   { id: '3', group: '1', name: 'Усиленный клинч (Improved Clinch Knot)', imagePreview: '../../assets/images/knots/palomar(preview).png', imageFull: '../../assets/images/knots/palomar.png', description: 'Современная версия клинча, более прочная благодаря дополнительному этапу фиксации. Появился в середине 20 века.' },
   { id: '4', group: '1', name: 'Универсальный узел (Uni Knot)', imagePreview: '../../assets/images/knots/palomar(preview).png', imageFull: '../../assets/images/knots/palomar.png', description: 'Прост в освоении и чрезвычайно надежен. Создан как замена многим узлам, чтобы уменьшить путаницу среди новичков.' },
@@ -52,6 +61,12 @@ const DEFAULT_IMAGE_FOR_KNOTS = {
 export default function App() {
   const [modalVisible, setModalVisible] = useState(false)
   const [searchText, setSearchText] = useState('')
+  const [search, setSearch] = useState(false)
+  const list_knots_handler = (array: List_Knots_Type[], searchText: string) => {
+    return array
+      .filter((item) => item.name.toLowerCase().includes(searchText.toLowerCase()))
+  }
+
   const showCustomAlert = () => {
     setModalVisible(true);
   };
@@ -67,6 +82,12 @@ export default function App() {
     setModalVisible(false);
     setModalProps(null);
   };
+
+  useEffect(() => {
+    if (searchText.length >= 0) {
+      setSearch(false)
+    }
+  }, [])
 
   return (
     <SafeAreaProvider>
@@ -97,18 +118,15 @@ export default function App() {
           <TextInput
             placeholder='search'
             onChangeText={setSearchText}
-            onSubmitEditing={() => {
-              const temp = list_knots.map((item) => item.name.includes(searchText) ? item.name : null)
-              console.log(temp)
-              Alert.alert('')
-            }}
           />
           <Button
             title='Search'
-            onPress={() => { Alert.alert(searchText) }}
+            onPress={() => {
+              setSearch(true)
+            }}
           />
           <FlatList
-            data={list_knots}
+            data={search ? list_knots_handler(list_knots, searchText) : list_knots}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <View key={item.id} style={styles.contentContainer}>
