@@ -19,7 +19,7 @@ type List_Knots_Type = {
   description: string
 }
 
-const list_knots: List_Knots_Type[] = [
+const knots_list: List_Knots_Type[] = [
   { id: '1', group: knots_group[1], name: 'Паломар (Palomar Knot)', imagePreview: '../../assets/images/knots/palomar(preview).png', imageFull: '../../assets/images/knots/palomar.png', description: 'Узел известен своей прочностью и простотой. Возник в США и стал популярен среди рыбаков благодаря универсальности. Отлично подходит для плетеных лесок.' },
   { id: '2', group: '1', name: 'Клинч (Clinch Knot)', imagePreview: '../../assets/images/knots/palomar(preview).png', imageFull: '../../assets/images/knots/palomar.png', description: 'Классический узел, часто используемый для монолески. Придуман рыбаками для быстрого и надежного крепления крючков и приманок.' },
   { id: '3', group: '1', name: 'Усиленный клинч (Improved Clinch Knot)', imagePreview: '../../assets/images/knots/palomar(preview).png', imageFull: '../../assets/images/knots/palomar.png', description: 'Современная версия клинча, более прочная благодаря дополнительному этапу фиксации. Появился в середине 20 века.' },
@@ -61,7 +61,7 @@ const DEFAULT_IMAGE_FOR_KNOTS = {
 export default function App() {
   const [modalVisible, setModalVisible] = useState(false)
   const [searchText, setSearchText] = useState('')
-  const [search, setSearch] = useState(false)
+  const [knostList, setKnotsList] = useState(knots_list)
   const list_knots_handler = (array: List_Knots_Type[], searchText: string) => {
     return array
       .filter((item) => item.name.toLowerCase().includes(searchText.toLowerCase()))
@@ -85,9 +85,22 @@ export default function App() {
 
   useEffect(() => {
     if (searchText.length >= 0) {
-      setSearch(false)
+      setKnotsList(knots_list);
     }
   }, [])
+
+  const handleSearch = (searchContext: string) => {
+    setSearchText(searchContext)
+    if (searchContext.length > 0) {
+      const filtered = knots_list.filter((item) =>
+        item.name.toLowerCase().includes(searchText.toLowerCase())
+      );
+      setKnotsList(filtered);
+    } else {
+      setKnotsList(knots_list); // Если поиск пустой, показываем весь список
+    }
+  };
+
 
   return (
     <SafeAreaProvider>
@@ -117,16 +130,18 @@ export default function App() {
           <Text style={styles.mainTitle}>Fishing Knots</Text>
           <TextInput
             placeholder='search'
-            onChangeText={setSearchText}
+            onChangeText={(text) => handleSearch(text)}
+            // onSubmitEditing={handleSearch} // Обработчик нажатия кнопки "Enter" на клавиатуре
+            returnKeyType="search" // Указывает, что кнопка Enter на клавиатуре будет отображаться как "Search"
           />
           <Button
             title='Search'
             onPress={() => {
-              setSearch(true)
+              // setSearch(true)
             }}
           />
           <FlatList
-            data={search ? list_knots_handler(list_knots, searchText) : list_knots}
+            data={knostList}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <View key={item.id} style={styles.contentContainer}>
