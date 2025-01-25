@@ -126,7 +126,7 @@ export default function App() {
             </View>
           </View>
         </Modal>
-        <View style={styles.testSquade}>
+        <View>
           <Text style={styles.mainTitle}>Fishing Knots</Text>
           <TextInput
             placeholder='search'
@@ -143,6 +143,7 @@ export default function App() {
           <FlatList
             data={knostList}
             keyExtractor={(item) => item.id}
+            style={styles.listContainer}
             renderItem={({ item }) => (
               <View key={item.id} style={styles.contentContainer}>
                 <Text style={styles.titleCard}>{item.name}</Text>
@@ -175,8 +176,9 @@ const styles = StyleSheet.create({
     margin: 10,
     paddingBottom: 60
   },
-  testSquade: {
-
+  listContainer: {
+    marginBottom: 80,
+    // paddingBottom: 60,
   },
   mainTitle: {
     padding: 10,
