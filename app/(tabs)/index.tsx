@@ -20,10 +20,6 @@ export default function App() {
       .filter((item) => item.name.toLowerCase().includes(searchText.toLowerCase()))
   }
 
-  const showCustomAlert = () => {
-    setModalVisible(true);
-  };
-
   const [modalProps, setModalProps] = useState<ModalProps | null>(null);
 
   const openModal = (title: string, message: string, image: string) => {
