@@ -14,8 +14,8 @@ export const knots_list_full = [
 		group: knots_group[1],
 		name: 'Паломар (Palomar Knot)',
 		imagePreview: require('../../assets/images/knots/palomar(preview).png'),
-		imageFull: '../../assets/images/knots/palomar.png',
-		imageAnimated: '../../assets/images/knots/palomar.png',
+		imageFull: require('../../assets/knots/Palomar/palomar_knot.jpg'),
+		imageAnimated: require('../../assets/knots/Palomar/Palomar_visualization.gif'),
 		description:
 			'How to tie the Palomar Knot. The single best fishing knot? Many fishermen believe that the Palomar Knot holds that title. Palomar Knot comes close to being a 100% knot when tied properly. Be sure that when the hook or lure is passed through the loop that all parts of the knot cinch up together. Many depictions of this knot elsewhere make it look like the loop part of the knot goes up against the bottom of the eye of the hook or lure. The knot can fail if tied in that manner. This is also the best knot to use with braided fishing line. The Palomar Knot is a good choice when fishing the popular Ned Rig with ElaZtech bait such as a Z-Man TRD bait. Due to the durability of the bait you might not think to retie your knot as often and the Palomar will probably hold up to more fish catching abuse than other knots.The Palomar Knot is one of 12 great fishing knots included on the Pro-Knot Fishing Knot Cards (click to see).Scroll to see Animated Palomar Knot below the illustration and tying instructions.',
 		instruction:
@@ -25,9 +25,9 @@ export const knots_list_full = [
 		id: '2',
 		group: knots_group[1],
 		name: 'Клинч (Clinch Knot)',
-		imagePreview: '../../assets/images/knots/palomar(preview).png',
-		imageFull: '../../assets/images/knots/palomar.png',
-		imageAnimated: '../../assets/images/knots/palomar.png',
+		imagePreview: require('../../assets/images/knots/palomar(preview).png'),
+		imageFull: require('../../assets/images/knots/palomar.png'),
+		imageAnimated: require('../../assets/knots/Palomar/Palomar_visualization.gif'),
 		description:
 			'Классический узел, часто используемый для монолески. Придуман рыбаками для быстрого и надежного крепления крючков и приманок.',
 		instruction:
@@ -37,9 +37,9 @@ export const knots_list_full = [
 		id: '3',
 		group: knots_group[1],
 		name: 'Усиленный клинч (Improved Clinch Knot)',
-		imagePreview: '../../assets/images/knots/palomar(preview).png',
-		imageFull: '../../assets/images/knots/palomar.png',
-		imageAnimated: '../../assets/images/knots/palomar.png',
+		imagePreview: require('../../assets/images/knots/palomar(preview).png'),
+		imageFull: require('../../assets/images/knots/palomar.png'),
+		imageAnimated: require('../../assets/knots/Palomar/Palomar_visualization.gif'),
 		description:
 			'Современная версия клинча, более прочная благодаря дополнительному этапу фиксации. Появился в середине 20 века.',
 		instruction:

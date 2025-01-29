@@ -12,13 +12,14 @@ export type List_Knots_Full_Type = {
 	group: string;
 	name: string;
 	imagePreview: string;
-	imageFull: string;
-	imageAnimated: string;
+	imageFull: number;
+	imageAnimated: number;
 	description: string;
 };
 
 export type ModalProps = {
-	title: string;
-	message: string;
-	image: string;
+	name: string;
+	description: string;
+	imageFull: number;
+	imageAnimated: number;
 };

@@ -4,6 +4,7 @@ import { List_Knots_Type, ModalProps } from '@/content/main/main_types';
 import main_styles from '@/styles/mainStyles';
 import { useEffect, useState } from 'react';
 import { Image, Text, View, FlatList, Button, Alert, TouchableOpacity, Modal, TextInput } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 
@@ -16,15 +17,16 @@ export default function App() {
   const [modalVisible, setModalVisible] = useState(false)
   const [searchText, setSearchText] = useState('')
   const [knostList, setKnotsList] = useState(knots_list_full)
-  // const list_knots_handler = (array: List_Knots_Type[], searchText: string) => {
-  //   return array
-  //     .filter((item) => item.name.toLowerCase().includes(searchText.toLowerCase()))
-  // }
-
   const [modalProps, setModalProps] = useState<ModalProps | null>(null);
 
-  const openModal = (title: string, message: string, image: string) => {
-    setModalProps({ title, message, image });
+  const navigation = useNavigation();
+  const openModal = (knot: ModalProps) => {
+    setModalProps({
+      name: knot.name,
+      description: knot.description,
+      imageFull: knot.imageFull,
+      imageAnimated: knot.imageAnimated
+    });
     setModalVisible(true);
   };
 
@@ -63,13 +65,20 @@ export default function App() {
         >
           <View style={main_styles.overlay}>
             <View style={main_styles.modalContent}>
-              <Text style={main_styles.modalTitle}>{modalProps?.title}</Text>
-              <Text style={main_styles.modalMessage}>{modalProps?.message}</Text>
+              <Text style={main_styles.modalTitle}>{modalProps?.name}</Text>
+              <Text style={main_styles.modalMessage}>{modalProps?.description}</Text>
               <Image
-                source={require('../../assets/images/knots/palomar.png')}
-                style={{ width: 100, height: 100 }}
+                source={modalProps?.imageFull}
+                // source={require('../../assets/images/knots/palomar.png')}
+                style={{ width: 150, height: 150 }}
                 onError={(error) => console.log('Image load error:', error.nativeEvent.error)}
               />
+              <TouchableOpacity
+                style={main_styles.closeButton}
+              // onPress={() => navigation.getParent()?.navigate('explore')}
+              >
+                <Text>Read full</Text>
+              </TouchableOpacity>
               <TouchableOpacity style={main_styles.closeButton} onPress={closeModal}>
                 <Text style={main_styles.buttonText}>Close</Text>
               </TouchableOpacity>
@@ -84,32 +93,18 @@ export default function App() {
             // onSubmitEditing={handleSearch} // Обработчик нажатия кнопки "Enter" на клавиатуре
             returnKeyType="search" // Указывает, что кнопка Enter на клавиатуре будет отображаться как "Search"
           />
-          <Button
+          {/* <Button
             title='Search'
             onPress={() => {
               // setSearch(true)
             }}
-          />
+          /> */}
           <FlatList
             data={knostList}
             keyExtractor={(item) => item.id}
             style={main_styles.listContainer}
             renderItem={({ item }) =>
-              <KnotElement item={item} />
-              //   (
-              //   <View key={item.id} style={main_styles.contentContainer}>
-              //     <Text style={main_styles.titleCard}>{item.name}</Text>
-              //     <TouchableOpacity
-              //       onPress={() => openModal(item.name, item.description, item.imageFull ? item.imageFull : '../../assets/images/knots/palomar(preview).png')}
-              //       // onPress={() => Alert.alert(item.name)}
-              //       style={main_styles.buttonBase}
-              //     >
-              //       <Text
-              //         style={main_styles.buttonTextMy}
-              //       >{'Continue'}</Text>
-              //     </TouchableOpacity>
-              //   </View>
-              // )
+              <KnotElement item={item} callBack={openModal} />
             }
           />
         </View>
