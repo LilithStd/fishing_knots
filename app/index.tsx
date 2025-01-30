@@ -66,16 +66,18 @@ export default function App() {
           <View style={main_styles.overlay}>
             <View style={main_styles.modalContent}>
               <Text style={main_styles.modalTitle}>{modalProps?.name}</Text>
-              <Text style={main_styles.modalMessage}>{modalProps?.description}</Text>
+              <Text style={main_styles.modalMessage}>{modalProps?.description.slice(0, 300)}</Text>
+              <Image
+                source={modalProps?.imageAnimated}
+                style={{ width: 150, height: 150 }}
+              />
               <Image
                 source={modalProps?.imageFull}
-                // source={require('../../assets/images/knots/palomar.png')}
                 style={{ width: 150, height: 150 }}
                 onError={(error) => console.log('Image load error:', error.nativeEvent.error)}
               />
               <TouchableOpacity
                 style={main_styles.closeButton}
-              // onPress={() => navigation.getParent()?.navigate('explore')}
               >
                 <Text>Read full</Text>
               </TouchableOpacity>

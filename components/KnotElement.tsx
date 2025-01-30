@@ -1,5 +1,5 @@
 import { List_Knots_Full_Type, ModalProps } from '@/content/main/main_types'
-import knotElementStyles from '@/styles/KnotDetailsStyles'
+import knotElementStyles from '@/styles/KnotElementStyles'
 import { TouchableOpacity, View, Text } from 'react-native'
 
 type callBackType = {
