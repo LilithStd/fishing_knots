@@ -45,6 +45,18 @@ export const knots_list_full = [
 		instruction:
 			'Palomar Knot Tying InstructionsDouble 6 inches of line and pass end of loop through eye of hook. Alternately, for small hook eyes, pass end of line through hook eye once, then double back and pass end of line through hook eye again from opposite direction, leaving about six inches of doubled line outside the hook eye.Tie a loose overhand knot with hook hanging from bottom.Holding overhand knot between thumb and forefinger, pass loop of line over the hook. Slide loop above eye of hook.Pull on both the standing line and tag end to tighten knot down onto eye. Clip tag end close.',
 	},
+	{
+		id: '4',
+		group: knots_group[1],
+		name: 'Усиленный клинч (Improved Clinch Knot)',
+		imagePreview: require('../../assets/images/knots/palomar(preview).png'),
+		imageFull: require('../../assets/images/knots/palomar.png'),
+		imageAnimated: require('../../assets/knots/Palomar/Palomar_visualization.gif'),
+		description:
+			'Современная версия клинча, более прочная благодаря дополнительному этапу фиксации. Появился в середине 20 века.',
+		instruction:
+			'Palomar Knot Tying InstructionsDouble 6 inches of line and pass end of loop through eye of hook. Alternately, for small hook eyes, pass end of line through hook eye once, then double back and pass end of line through hook eye again from opposite direction, leaving about six inches of doubled line outside the hook eye.Tie a loose overhand knot with hook hanging from bottom.Holding overhand knot between thumb and forefinger, pass loop of line over the hook. Slide loop above eye of hook.Pull on both the standing line and tag end to tighten knot down onto eye. Clip tag end close.',
+	},
 ];
 
 export const knots_list: List_Knots_Type[] = [
