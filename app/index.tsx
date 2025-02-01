@@ -60,6 +60,9 @@ export default function App() {
         <ImageBackground
           source={require('../assets/images/background/main/gradient_1080_1920.png')}
           resizeMode='cover'
+          style={{
+            flex: 1
+          }}
         >
 
 
