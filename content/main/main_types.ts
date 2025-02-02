@@ -18,6 +18,7 @@ export type List_Knots_Full_Type = {
 };
 
 export type ModalProps = {
+	id: string;
 	name: string;
 	description: string;
 	imageFull: number;

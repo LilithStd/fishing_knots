@@ -4,8 +4,11 @@ import { List_Knots_Type, ModalProps } from '@/content/main/main_types';
 import main_styles from '@/styles/mainStyles';
 import { useEffect, useState } from 'react';
 import { Image, Text, View, FlatList, Button, Alert, TouchableOpacity, Modal, TextInput, ImageBackground } from 'react-native';
+import { HeartIcon as HeartIconOutline } from 'react-native-heroicons/outline'
+import { HeartIcon as HeartIconSolid } from 'react-native-heroicons/solid'
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { KnotType, useFavoritesStore } from '@/store/favoriteStore';
 
 
 const DEFAULT_IMAGE_FOR_KNOTS = {
@@ -18,10 +21,15 @@ export default function App() {
   const [searchText, setSearchText] = useState('')
   const [knostList, setKnotsList] = useState(knots_list_full)
   const [modalProps, setModalProps] = useState<ModalProps | null>(null);
+  const addFavorite = useFavoritesStore(state => state.addFavorite)
+  const checkAlreadyAddToFavorite = useFavoritesStore(state => state.checkElementInFavorite)
+  const removeFromFavorite = useFavoritesStore(state => state.removeFavorite)
+  const favoritesKnots = useFavoritesStore(state => state.favorites)
 
   const navigation = useNavigation();
   const openModal = (knot: ModalProps) => {
     setModalProps({
+      id: knot.id,
       name: knot.name,
       description: knot.description,
       imageFull: knot.imageFull,
@@ -40,6 +48,17 @@ export default function App() {
       setKnotsList(knots_list_full);
     }
   }, [])
+  const handleAddFavorite = (knot: string) => {
+    const tempElement = knot
+    addFavorite({ id: tempElement })
+    console.log(favoritesKnots)
+  }
+
+  const handleRemoveFromFavorite = (knot: string) => {
+    const tempElement = knot
+    removeFromFavorite(tempElement)
+    console.log(favoritesKnots)
+  }
 
   const handleSearch = (searchContext: string) => {
     setSearchText(searchContext)
@@ -52,6 +71,7 @@ export default function App() {
       setKnotsList(knots_list_full); // Если поиск пустой, показываем весь список
     }
   };
+
 
 
   return (
@@ -88,10 +108,18 @@ export default function App() {
                 <TouchableOpacity
                   style={main_styles.closeButton}
                 >
-                  <Text>Read full</Text>
+                  <Text style={{ margin: 2 }}>Read full</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={main_styles.closeButton} onPress={closeModal}>
                   <Text style={main_styles.buttonText}>Close</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  {checkAlreadyAddToFavorite({ id: modalProps?.id ? modalProps.id : '' }) ?
+                    <HeartIconSolid size={60} color={'red'} onPress={() =>
+                      handleRemoveFromFavorite(modalProps?.id ? modalProps.id : '')
+                    } />
+                    : <HeartIconOutline size={60} color={'red'} onPress={() => handleAddFavorite(modalProps?.id ? modalProps.id : '')} />}
+
                 </TouchableOpacity>
               </View>
             </View>
