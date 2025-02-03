@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export type KnotType = {
 	id: string;
+	name: string;
 };
 
 export type FavoritesState = {
@@ -30,7 +31,7 @@ export const useFavoritesStore = create<
 						(item) => item.id === knot.id,
 					);
 
-					if (isAlreadyFavorite || knot.id === '') return state; // Если есть, не добавляем
+					if (isAlreadyFavorite || !knot.id) return state; // Если уже есть или id пустой, не добавляем
 
 					return {favorites: [...state.favorites, knot]};
 				});

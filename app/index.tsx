@@ -48,16 +48,19 @@ export default function App() {
       setKnotsList(knots_list_full);
     }
   }, [])
-  const handleAddFavorite = (knot: string) => {
-    const tempElement = knot
-    addFavorite({ id: tempElement })
-    console.log(favoritesKnots)
+  type knotType = {
+    id: string,
+    name: string
+  }
+
+  const handleAddFavorite = (knot: knotType) => {
+    const tempElement = knot.id
+    addFavorite({ id: tempElement, name: knot.name })
   }
 
   const handleRemoveFromFavorite = (knot: string) => {
     const tempElement = knot
     removeFromFavorite(tempElement)
-    console.log(favoritesKnots)
   }
 
   const handleSearch = (searchContext: string) => {
@@ -114,11 +117,11 @@ export default function App() {
                   <Text style={main_styles.buttonText}>Close</Text>
                 </TouchableOpacity>
                 <TouchableOpacity>
-                  {checkAlreadyAddToFavorite({ id: modalProps?.id ? modalProps.id : '' }) ?
+                  {checkAlreadyAddToFavorite({ id: modalProps?.id ? modalProps.id : '', name: modalProps?.name ? modalProps.name : '' }) ?
                     <HeartIconSolid size={60} color={'red'} onPress={() =>
                       handleRemoveFromFavorite(modalProps?.id ? modalProps.id : '')
                     } />
-                    : <HeartIconOutline size={60} color={'red'} onPress={() => handleAddFavorite(modalProps?.id ? modalProps.id : '')} />}
+                    : <HeartIconOutline size={60} color={'red'} onPress={() => handleAddFavorite({ id: modalProps?.id ? modalProps.id : '', name: modalProps?.name ? modalProps.name : '' })} />}
 
                 </TouchableOpacity>
               </View>
