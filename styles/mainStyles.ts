@@ -64,12 +64,17 @@ const mainStyles = StyleSheet.create({
 	closeButton: {
 		backgroundColor: '#007BFF',
 		paddingVertical: 10,
-		paddingHorizontal: 20,
+		paddingHorizontal: 10,
 		borderRadius: 5,
 	},
 	buttonText: {
 		color: 'white',
 		fontWeight: 'bold',
+	},
+	buttonsContainer: {
+		flexDirection: 'row',
+		margin: 20,
+		gap: 10,
 	},
 });
 

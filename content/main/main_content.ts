@@ -48,7 +48,7 @@ export const knots_list_full = [
 	{
 		id: '4',
 		group: knots_group[1],
-		name: 'Усиленный клинч (Improved Clinch Knot)',
+		name: 'Универсальный узел (Uni Knot)',
 		imagePreview: require('../../assets/images/knots/palomar(preview).png'),
 		imageFull: require('../../assets/images/knots/palomar.png'),
 		imageAnimated: require('../../assets/knots/Palomar/Palomar_visualization.gif'),

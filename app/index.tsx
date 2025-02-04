@@ -108,22 +108,25 @@ export default function App() {
                   style={{ width: 150, height: 150 }}
                   onError={(error) => console.log('Image load error:', error.nativeEvent.error)}
                 />
-                <TouchableOpacity
-                  style={main_styles.closeButton}
-                >
-                  <Text style={{ margin: 2 }}>Read full</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={main_styles.closeButton} onPress={closeModal}>
-                  <Text style={main_styles.buttonText}>Close</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  {checkAlreadyAddToFavorite({ id: modalProps?.id ? modalProps.id : '', name: modalProps?.name ? modalProps.name : '' }) ?
-                    <HeartIconSolid size={60} color={'red'} onPress={() =>
-                      handleRemoveFromFavorite(modalProps?.id ? modalProps.id : '')
-                    } />
-                    : <HeartIconOutline size={60} color={'red'} onPress={() => handleAddFavorite({ id: modalProps?.id ? modalProps.id : '', name: modalProps?.name ? modalProps.name : '' })} />}
+                <View style={main_styles.buttonsContainer}>
+                  <TouchableOpacity
+                    style={main_styles.closeButton}
+                  >
+                    <Text style={{ margin: 2 }}>Read full</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={main_styles.closeButton} onPress={closeModal}>
+                    <Text style={main_styles.buttonText}>Close</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity>
+                    {checkAlreadyAddToFavorite({ id: modalProps?.id ? modalProps.id : '', name: modalProps?.name ? modalProps.name : '' }) ?
+                      <HeartIconSolid size={60} color={'red'} onPress={() =>
+                        handleRemoveFromFavorite(modalProps?.id ? modalProps.id : '')
+                      } />
+                      : <HeartIconOutline size={60} color={'red'} onPress={() => handleAddFavorite({ id: modalProps?.id ? modalProps.id : '', name: modalProps?.name ? modalProps.name : '' })} />}
 
-                </TouchableOpacity>
+                  </TouchableOpacity>
+                </View>
+
               </View>
             </View>
           </Modal>

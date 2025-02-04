@@ -18,7 +18,6 @@ export default function KnotElement({ item, callBack }: KnotElementProps) {
             <Text style={knotElementStyles.knotElementTitle}>{item.name}</Text>
             <TouchableOpacity
                 onPress={() => callBack(item)}
-                // onPress={() => Alert.alert(item.name)}
                 style={knotElementStyles.knotElementButton}
             >
                 <Text
