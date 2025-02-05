@@ -13,6 +13,10 @@ const mainStyles = StyleSheet.create({
 		marginBottom: 80,
 		// paddingBottom: 60,
 	},
+	video: {
+		width: 300,
+		height: 200,
+	},
 	mainTitle: {
 		padding: 10,
 		textAlign: 'center',

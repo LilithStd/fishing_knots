@@ -2,6 +2,7 @@ import KnotElement from '@/components/KnotElement';
 import { knots_list, knots_list_full } from '@/content/main/main_content';
 import { List_Knots_Type, ModalProps } from '@/content/main/main_types';
 import main_styles from '@/styles/mainStyles';
+import Video from 'expo-video';
 import { useEffect, useState } from 'react';
 import { Image, Text, View, FlatList, Button, Alert, TouchableOpacity, Modal, TextInput, ImageBackground } from 'react-native';
 import { HeartIcon as HeartIconOutline } from 'react-native-heroicons/outline'
@@ -99,10 +100,17 @@ export default function App() {
               <View style={main_styles.modalContent}>
                 <Text style={main_styles.modalTitle}>{modalProps?.name}</Text>
                 <Text style={main_styles.modalMessage}>{modalProps?.description.slice(0, 300)}</Text>
-                <Image
+                <Video
+                  source={{ uri: 'https://www.w3schools.com/html/mov_bbb.mp4' }} // Онлайн-видео
+                  style={main_styles.video}
+                  useNativeControls // Показывает стандартные кнопки управления
+                  resizeMode="contain"
+                  isLooping
+                />
+                {/* <Image
                   source={modalProps?.imageAnimated}
                   style={{ width: 150, height: 150 }}
-                />
+                /> */}
                 <Image
                   source={modalProps?.imageFull}
                   style={{ width: 150, height: 150 }}
