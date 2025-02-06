@@ -1,8 +1,8 @@
 import KnotElement from '@/components/KnotElement';
 import { knots_list, knots_list_full } from '@/content/main/main_content';
 import { List_Knots_Type, ModalProps } from '@/content/main/main_types';
-import main_styles from '@/styles/mainStyles';
-import Video from 'expo-video';
+import mainStyles from '@/styles/mainStyles';
+import { useVideoPlayer, VideoView } from 'expo-video';
 import { useEffect, useState } from 'react';
 import { Image, Text, View, FlatList, Button, Alert, TouchableOpacity, Modal, TextInput, ImageBackground } from 'react-native';
 import { HeartIcon as HeartIconOutline } from 'react-native-heroicons/outline'
@@ -10,12 +10,15 @@ import { HeartIcon as HeartIconSolid } from 'react-native-heroicons/solid'
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { KnotType, useFavoritesStore } from '@/store/favoriteStore';
+import ModalWindow from '@/components/modalWindow';
 
 
 const DEFAULT_IMAGE_FOR_KNOTS = {
   PREVIEW: '../../assets/images/knots/palomar(preview).png',
   FULL: '../../assets/images/knots/palomar.png'
 }
+
+const localSource = require('../assets/knots/Palomar/Palomar_video.mp4')
 
 export default function App() {
   const [modalVisible, setModalVisible] = useState(false)
@@ -26,8 +29,12 @@ export default function App() {
   const checkAlreadyAddToFavorite = useFavoritesStore(state => state.checkElementInFavorite)
   const removeFromFavorite = useFavoritesStore(state => state.removeFavorite)
   const favoritesKnots = useFavoritesStore(state => state.favorites)
+  const player = useVideoPlayer(localSource, (player) => {
+    player.loop = true;
+    player.staysActiveInBackground = true;
+    modalVisible ? player.play : player.pause
+  })
 
-  const navigation = useNavigation();
   const openModal = (knot: ModalProps) => {
     setModalProps({
       id: knot.id,
@@ -80,9 +87,9 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={main_styles.container}>
+      <SafeAreaView style={mainStyles.container}>
         <ImageBackground
-          source={require('../assets/images/background/main/gradient_1080_1920.png')}
+          source={require('../assets/images/background/main/3687_mountain-landscape-petropolis-brazil_1080x2400.jpg')}
           resizeMode='cover'
           style={{
             flex: 1
@@ -90,40 +97,29 @@ export default function App() {
         >
 
 
-          <Modal
+          {/* <Modal
             animationType="fade"
             transparent={true}
             visible={modalVisible}
             onRequestClose={closeModal}
           >
-            <View style={main_styles.overlay}>
-              <View style={main_styles.modalContent}>
-                <Text style={main_styles.modalTitle}>{modalProps?.name}</Text>
-                <Text style={main_styles.modalMessage}>{modalProps?.description.slice(0, 300)}</Text>
-                <Video
-                  source={{ uri: 'https://www.w3schools.com/html/mov_bbb.mp4' }} // Онлайн-видео
-                  style={main_styles.video}
-                  useNativeControls // Показывает стандартные кнопки управления
-                  resizeMode="contain"
-                  isLooping
-                />
-                {/* <Image
-                  source={modalProps?.imageAnimated}
-                  style={{ width: 150, height: 150 }}
-                /> */}
+            <View style={mainStyles.overlay}>
+              <View style={mainStyles.modalContent}>
+                <Text style={mainStyles.modalTitle}>{modalProps?.name}</Text>
+                <Text style={mainStyles.modalMessage}>{modalProps?.description.slice(0, 300)}</Text>
                 <Image
                   source={modalProps?.imageFull}
-                  style={{ width: 150, height: 150 }}
+                  style={{ width: 200, height: 300 }}
                   onError={(error) => console.log('Image load error:', error.nativeEvent.error)}
                 />
-                <View style={main_styles.buttonsContainer}>
+                <View style={mainStyles.buttonsContainer}>
                   <TouchableOpacity
-                    style={main_styles.closeButton}
+                    style={mainStyles.closeButton}
                   >
                     <Text style={{ margin: 2 }}>Read full</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={main_styles.closeButton} onPress={closeModal}>
-                    <Text style={main_styles.buttonText}>Close</Text>
+                  <TouchableOpacity style={mainStyles.closeButton} onPress={closeModal}>
+                    <Text style={mainStyles.buttonText}>Close</Text>
                   </TouchableOpacity>
                   <TouchableOpacity>
                     {checkAlreadyAddToFavorite({ id: modalProps?.id ? modalProps.id : '', name: modalProps?.name ? modalProps.name : '' }) ?
@@ -137,9 +133,10 @@ export default function App() {
 
               </View>
             </View>
-          </Modal>
+          </Modal> */}
+          {/* <ModalWindow status={ modalVisible } /> */}
           <View>
-            <Text style={main_styles.mainTitle}>Fishing Knots</Text>
+            <Text style={mainStyles.mainTitle}>Fishing Knots</Text>
             <TextInput
               placeholder='search'
               onChangeText={(text) => handleSearch(text)}
@@ -149,7 +146,7 @@ export default function App() {
             <FlatList
               data={knostList}
               keyExtractor={(item) => item.id}
-              style={main_styles.listContainer}
+              style={mainStyles.listContainer}
               renderItem={({ item }) =>
                 <KnotElement item={item} callBack={openModal} />
               }

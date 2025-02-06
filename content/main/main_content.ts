@@ -25,8 +25,8 @@ export const knots_list_full = [
 		id: '2',
 		group: knots_group[1],
 		name: 'Клинч (Clinch Knot)',
-		imagePreview: require('../../assets/images/knots/palomar(preview).png'),
-		imageFull: require('../../assets/images/knots/palomar.png'),
+		imagePreview: require('../../assets/knots/Clinch/clinch_knot.jpg'),
+		imageFull: require('../../assets/knots/Clinch/clinch_knot.jpg'),
 		imageAnimated: require('../../assets/knots/Palomar/Palomar_visualization.gif'),
 		description:
 			'Классический узел, часто используемый для монолески. Придуман рыбаками для быстрого и надежного крепления крючков и приманок.',
@@ -37,8 +37,8 @@ export const knots_list_full = [
 		id: '3',
 		group: knots_group[1],
 		name: 'Усиленный клинч (Improved Clinch Knot)',
-		imagePreview: require('../../assets/images/knots/palomar(preview).png'),
-		imageFull: require('../../assets/images/knots/palomar.png'),
+		imagePreview: require('../../assets/knots/Improved_Clinch/improved_clinch_knot.jpg'),
+		imageFull: require('../../assets/knots/Improved_Clinch/improved_clinch_knot.jpg'),
 		imageAnimated: require('../../assets/knots/Palomar/Palomar_visualization.gif'),
 		description:
 			'Современная версия клинча, более прочная благодаря дополнительному этапу фиксации. Появился в середине 20 века.',
@@ -49,8 +49,8 @@ export const knots_list_full = [
 		id: '4',
 		group: knots_group[1],
 		name: 'Универсальный узел (Uni Knot)',
-		imagePreview: require('../../assets/images/knots/palomar(preview).png'),
-		imageFull: require('../../assets/images/knots/palomar.png'),
+		imagePreview: require('../../assets/knots/Uni_Knot/uni-knot.jpg'),
+		imageFull: require('../../assets/knots/Uni_Knot/uni-knot.jpg'),
 		imageAnimated: require('../../assets/knots/Palomar/Palomar_visualization.gif'),
 		description:
 			'Современная версия клинча, более прочная благодаря дополнительному этапу фиксации. Появился в середине 20 века.',
