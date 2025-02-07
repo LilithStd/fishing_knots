@@ -2,48 +2,52 @@ import {create} from 'zustand';
 import {persist, createJSONStorage} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export type KnotType = {
+// Тип узла
+export type List_Knots_Type = {
 	id: string;
+	group: string;
 	name: string;
+	imagePreview: number;
+	imageFull: number;
+	imageAnimated: number;
+	description: string;
 };
 
+// Тип состояния избранного
 export type FavoritesState = {
-	favorites: KnotType[];
-	checkElementInFavorite: (knot: KnotType) => boolean;
-	addFavorite: (knot: KnotType) => void;
+	favorites: List_Knots_Type[];
+	checkElementInFavorite: (knot: string) => boolean;
+	addFavorite: (knot: List_Knots_Type) => void;
 	removeFavorite: (knotId: string) => void;
 };
 
-export const useFavoritesStore = create<
-	FavoritesState,
-	[['zustand/persist', FavoritesState]]
->(
+// Zustand-хранилище
+export const useFavoritesStore = create<FavoritesState>()(
 	persist(
 		(set, get) => ({
 			favorites: [],
-			checkElementInFavorite: (knot: KnotType) => {
-				return get().favorites.some((item) => item.id === knot.id);
+
+			checkElementInFavorite: (knot) => {
+				return get().favorites.some((item) => item.id === knot);
 			},
-			addFavorite: (knot: KnotType) => {
+
+			addFavorite: (knot) => {
 				set((state) => {
-					// Проверяем, есть ли уже узел в избранном
-					const isAlreadyFavorite = state.favorites.some(
-						(item) => item.id === knot.id,
-					);
-
-					if (isAlreadyFavorite || !knot.id) return state; // Если уже есть или id пустой, не добавляем
-
+					if (state.favorites.some((item) => item.id === knot.id) || !knot.id) {
+						return state;
+					}
 					return {favorites: [...state.favorites, knot]};
 				});
 			},
-			removeFavorite: (knotId: string) =>
+
+			removeFavorite: (knotId) =>
 				set((state) => ({
 					favorites: state.favorites.filter((item) => item.id !== knotId),
 				})),
 		}),
 		{
-			name: 'favorites-storage', // ключ для AsyncStorage
-			storage: createJSONStorage(() => AsyncStorage), // используем AsyncStorage
+			name: 'favorites-storage',
+			storage: createJSONStorage(() => AsyncStorage),
 		},
 	),
 );

@@ -2,7 +2,8 @@ import { useFavoritesStore } from '@/store/favoriteStore'
 import { View, Text, FlatList, ImageBackground } from 'react-native'
 import favoritesStyles from '../styles/favoritesStyles'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
-import { knots_list, knots_list_full } from '@/content/main/main_content';
+import { knots_list_full } from '@/content/main/main_content';
+import KnotElement from '@/components/KnotElement';
 
 export default function Favorites() {
     const favorites = useFavoritesStore(state => state.favorites)
@@ -28,7 +29,7 @@ export default function Favorites() {
                             keyExtractor={(item) => item.id}
 
                             renderItem={({ item }) =>
-                                <Text>{item.name}</Text>
+                                <KnotElement item={item} />
                             }
                         />
                     </View>

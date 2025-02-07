@@ -1,9 +1,10 @@
 export type List_Knots_Type = {
+	imageAnimated: number;
 	id: string;
 	group: string;
 	name: string;
-	imagePreview: string;
-	imageFull: string;
+	imagePreview: number;
+	imageFull: number;
 	description: string;
 };
 

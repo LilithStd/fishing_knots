@@ -1,5 +1,6 @@
-import { List_Knots_Full_Type, ModalProps } from "@/content/main/main_types";
+import { List_Knots_Full_Type, List_Knots_Type, ModalProps } from "@/content/main/main_types";
 import { useFavoritesStore } from "@/store/favoriteStore";
+import { useGlobalModalStore } from "@/store/globalStatusStore";
 import modalStyles from "@/styles/modalStyles";
 import React, { useEffect, useState } from "react";
 import { Modal, View, Text, TouchableOpacity, Image } from "react-native";
@@ -12,34 +13,47 @@ type knotType = {
 }
 
 interface KnotElementProps {
-    item: ModalProps;
+    item: List_Knots_Type;
     // callBack: (knot: ModalProps) => void
 }
 
 
 export default function ModalWindow({ item }: KnotElementProps) {
+    const statusModal = useGlobalModalStore(state => state.isOpen)
+    const setCloseModal = useGlobalModalStore(state => state.closeModal)
+    const idOpenElement = useGlobalModalStore(state => state.openElementId)
     const [modalVisible, setModalVisible] = useState(false)
-    const [modalProps, setModalProps] = useState<ModalProps | null>(null);
+    const [modalProps, setModalProps] = useState<List_Knots_Type>({
+        id: '',
+        name: '',
+        group: '',
+        description: '',
+        imagePreview: 0,
+        imageFull: 0,
+        imageAnimated: 0
+    });
     const addFavorite = useFavoritesStore(state => state.addFavorite)
     const checkAlreadyAddToFavorite = useFavoritesStore(state => state.checkElementInFavorite)
 
     useEffect(() => {
-        if (item.id !== '') {
+        if (item.id === idOpenElement && statusModal) {
             setModalProps({
                 id: item.id,
                 name: item.name,
+                group: item.group,
                 description: item.description,
+                imagePreview: item.imagePreview,
                 imageFull: item.imageFull,
                 imageAnimated: item.imageAnimated
             });
             setModalVisible(true);
         }
 
-    }, [item])
+    }, [item, idOpenElement])
 
-    const handleAddFavorite = (knot: knotType) => {
-        const tempElement = knot.id
-        addFavorite({ id: tempElement, name: knot.name })
+    const handleAddFavorite = (knot: List_Knots_Type) => {
+        const tempElement = knot
+        addFavorite(tempElement)
     }
 
     const handleRemoveFromFavorite = (knot: string) => {
@@ -50,7 +64,16 @@ export default function ModalWindow({ item }: KnotElementProps) {
 
     const closeModal = () => {
         setModalVisible(false);
-        setModalProps(null);
+        setCloseModal()
+        setModalProps({
+            id: '',
+            name: '',
+            group: '',
+            description: '',
+            imagePreview: 0,
+            imageFull: 0,
+            imageAnimated: 0
+        });
     };
     return (
         <Modal
@@ -78,11 +101,11 @@ export default function ModalWindow({ item }: KnotElementProps) {
                             <Text style={modalStyles.buttonText}>Close</Text>
                         </TouchableOpacity>
                         <TouchableOpacity>
-                            {checkAlreadyAddToFavorite({ id: modalProps?.id ? modalProps.id : '', name: modalProps?.name ? modalProps.name : '' }) ?
+                            {checkAlreadyAddToFavorite(modalProps.id) ?
                                 <HeartIconSolid size={60} color={'red'} onPress={() =>
                                     handleRemoveFromFavorite(modalProps?.id ? modalProps.id : '')
                                 } />
-                                : <HeartIconOutline size={60} color={'red'} onPress={() => handleAddFavorite({ id: modalProps?.id ? modalProps.id : '', name: modalProps?.name ? modalProps.name : '' })} />}
+                                : <HeartIconOutline size={60} color={'red'} onPress={() => handleAddFavorite(modalProps)} />}
 
                         </TouchableOpacity>
                     </View>

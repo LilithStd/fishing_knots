@@ -1,5 +1,5 @@
 import KnotElement from '@/components/KnotElement';
-import { knots_list, knots_list_full } from '@/content/main/main_content';
+import { knots_list_full } from '@/content/main/main_content';
 import { List_Knots_Type, ModalProps } from '@/content/main/main_types';
 import mainStyles from '@/styles/mainStyles';
 import { useVideoPlayer, VideoView } from 'expo-video';
@@ -9,7 +9,7 @@ import { HeartIcon as HeartIconOutline } from 'react-native-heroicons/outline'
 import { HeartIcon as HeartIconSolid } from 'react-native-heroicons/solid'
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { KnotType, useFavoritesStore } from '@/store/favoriteStore';
+import { useFavoritesStore } from '@/store/favoriteStore';
 import ModalWindow from '@/components/modalWindow';
 
 
@@ -61,10 +61,10 @@ export default function App() {
     name: string
   }
 
-  const handleAddFavorite = (knot: knotType) => {
-    const tempElement = knot.id
-    addFavorite({ id: tempElement, name: knot.name })
-  }
+  // const handleAddFavorite = (knot: knotType) => {
+  //   const tempElement = knot.id
+  //   addFavorite({ id: tempElement, name: knot.name })
+  // }
 
   const handleRemoveFromFavorite = (knot: string) => {
     const tempElement = knot
@@ -148,7 +148,7 @@ export default function App() {
               keyExtractor={(item) => item.id}
               style={mainStyles.listContainer}
               renderItem={({ item }) =>
-                <KnotElement item={item} callBack={openModal} />
+                <KnotElement item={item} />
               }
             />
           </View>
