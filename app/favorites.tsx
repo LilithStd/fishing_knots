@@ -7,7 +7,6 @@ import KnotElement from '@/components/KnotElement';
 
 export default function Favorites() {
     const favorites = useFavoritesStore(state => state.favorites)
-
     return (
         <SafeAreaProvider>
             <SafeAreaView style={{

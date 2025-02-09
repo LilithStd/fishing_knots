@@ -34,7 +34,6 @@ export default function ModalWindow({ item }: KnotElementProps) {
     });
     const addFavorite = useFavoritesStore(state => state.addFavorite)
     const checkAlreadyAddToFavorite = useFavoritesStore(state => state.checkElementInFavorite)
-
     useEffect(() => {
         if (item.id === idOpenElement && statusModal) {
             setModalProps({
@@ -47,6 +46,8 @@ export default function ModalWindow({ item }: KnotElementProps) {
                 imageAnimated: item.imageAnimated
             });
             setModalVisible(true);
+
+
         }
 
     }, [item, idOpenElement])
@@ -75,6 +76,7 @@ export default function ModalWindow({ item }: KnotElementProps) {
             imageAnimated: 0
         });
     };
+
     return (
         <Modal
             animationType="fade"
@@ -84,8 +86,8 @@ export default function ModalWindow({ item }: KnotElementProps) {
         >
             <View style={modalStyles.overlay}>
                 <View style={modalStyles.modalContent}>
-                    <Text style={modalStyles.modalTitle}>{modalProps?.name}</Text>
-                    <Text style={modalStyles.modalMessage}>{modalProps?.description.slice(0, 300)}</Text>
+                    <Text style={modalStyles.modalTitle}>{modalProps.name}</Text>
+                    <Text style={modalStyles.modalMessage}>{modalProps.description.slice(0, 300)}</Text>
                     <Image
                         source={modalProps?.imageFull}
                         style={{ width: 200, height: 300 }}
@@ -103,7 +105,7 @@ export default function ModalWindow({ item }: KnotElementProps) {
                         <TouchableOpacity>
                             {checkAlreadyAddToFavorite(modalProps.id) ?
                                 <HeartIconSolid size={60} color={'red'} onPress={() =>
-                                    handleRemoveFromFavorite(modalProps?.id ? modalProps.id : '')
+                                    handleRemoveFromFavorite(modalProps.id)
                                 } />
                                 : <HeartIconOutline size={60} color={'red'} onPress={() => handleAddFavorite(modalProps)} />}
 
